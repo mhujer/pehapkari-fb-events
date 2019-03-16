@@ -1,7 +1,7 @@
 const puppeteer = require('puppeteer');
 
 (async () => {
-    const browser = await puppeteer.launch({headless: false});
+    const browser = await puppeteer.launch(/*{headless: false}*/);
     const page = await browser.newPage();
     await page.goto('https://www.facebook.com/pg/pehapkari/events/');
     await page.setViewport({

@@ -16,7 +16,7 @@ const puppeteer = require('puppeteer');
         '2677594598917305'
     ];
 
-    const browser = await puppeteer.launch({headless: false});
+    const browser = await puppeteer.launch(/*{headless: false}*/);
     const page = await browser.newPage();
     await page.goto('https://www.facebook.com/events/' + eventIds[0] + '/');
 
