@@ -18,18 +18,23 @@ const puppeteer = require('puppeteer');
     // Get the "viewport" of the page, as reported by the page.
     const data = await page.evaluate(() => {
 
-        let eventIds = [];
-        Array.from(document.querySelectorAll('#past_events_card a')).forEach(function(el) {
-            let eventUrl = el.getAttribute('href');
+        const parseEvents = (wrapperElementId) => {
+            let eventIds = [];
+            Array.from(document.querySelectorAll('#' + wrapperElementId + ' a')).forEach(function(el) {
+                let eventUrl = el.getAttribute('href');
 
-            if (eventUrl.startsWith('/events/')) {
-                let eventId = /\/events\/(\d+)\//g.exec(eventUrl);
-                eventIds.push(eventId[1]);
-            }
-        });
+                if (eventUrl.startsWith('/events/')) {
+                    let eventId = /\/events\/(\d+)\//g.exec(eventUrl);
+                    eventIds.push(eventId[1]);
+                }
+            });
+
+            return eventIds;
+        };
 
         return {
-            eventIds: eventIds
+            upcomingEvents: parseEvents('upcoming_events_card'),
+            pastEvents: parseEvents('past_events_card'),
         };
     });
     console.log('Data:', data);
